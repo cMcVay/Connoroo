@@ -5,6 +5,49 @@
   </head>
   <body>
     <h1>Now Playing</h1>
+    //1. Add div for video player //
+    <div id="player"></div>
+
+    //2. create iframe player API code//
+    <script>
+      var tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      //3. This function creates an iframe and Youtube player//
+      var player;
+      function onYoutubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '390',
+          width: '640',
+          videoId: 'H2snroGWTmU',
+          playerVars: {
+            'playsinline' : 1
+          },
+          events: {
+            'onReady' : onPlayerReady,
+            'onStateChange' : onPlayerStateChange
+          }
+        });
+      }
+
+      //4. The API will call this function when the video player is ready.//
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+      //5. The API calls this funciton when the player's state changes.
+      var done = false;
+      function onPlayerStateChange(event) { 
+        if (event.data == YT.PlayerState.PLAYING && !done) { 
+          setTimeout(stopVideo, 6000);
+          done = true;
+        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
+      </script>
     <iframe 
       width="560" 
       height="315" 
