@@ -47,8 +47,10 @@
   let currentClip = 0;
   let playlistActive = false;
   let clipTimeout = null;
+  let clipStartTimestamp = null;
+  let remainingTime = null;
+  let paused = false;
 
-  // 3. Create YouTube player
   function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
       height: '360',
@@ -75,13 +77,31 @@
   }
 
   function pausePlaylist() {
-    playlistActive = false;
-    clearTimeout(clipTimeout);
-    player.pauseVideo();
+    if (!paused) {
+      // Pausing
+      paused = true;
+      clearTimeout(clipTimeout);
+      player.pauseVideo();
+
+      const elapsed = Date.now() - clipStartTimestamp;
+      remainingTime = Math.max(0, remainingTime ? remainingTime : (clips[currentClip].end - clips[currentClip].start) * 1000 - elapsed);
+    } else {
+      // Resuming
+      paused = false;
+      player.playVideo();
+
+      clipStartTimestamp = Date.now();
+      clipTimeout = setTimeout(() => {
+        nextVideo();
+      }, remainingTime);
+      remainingTime = null; // Reset
+    }
   }
 
   function nextVideo() {
     clearTimeout(clipTimeout);
+    remainingTime = null;
+    paused = false;
     currentClip = (currentClip + 1) % clips.length;
     if (playlistActive) {
       playClip(currentClip);
@@ -97,12 +117,14 @@
       startSeconds: clip.start
     });
 
-    // Set timeout to move to next clip
+    clipStartTimestamp = Date.now();
     clipTimeout = setTimeout(() => {
       nextVideo();
     }, duration);
+    remainingTime = duration;
   }
 </script>
+
 
 </body>
 </html>
