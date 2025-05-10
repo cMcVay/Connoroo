@@ -46,6 +46,7 @@
   let player;
   let currentClip = 0;
   let playlistActive = false;
+  let clipTimeout = null;
 
   // 3. Create YouTube player
   function onYouTubeIframeAPIReady() {
@@ -54,14 +55,11 @@
       width: '640',
       videoId: clips[currentClip].videoId,
       playerVars: {
-        start: clips[currentClip].start,
-        end: clips[currentClip].end,
         autoplay: 0,
         controls: 1,
       },
       events: {
         'onReady': onPlayerReady,
-        'onStateChange': onPlayerStateChange
       }
     });
   }
@@ -70,36 +68,39 @@
     // Do nothing initially
   }
 
-  // Autoplay next clip on end if playlist is active
-  function onPlayerStateChange(event) {
-    if (event.data === YT.PlayerState.ENDED && playlistActive) {
-      nextVideo(); // Move to next automatically
-    }
-  }
-
   function startPlaylist() {
     playlistActive = true;
-    currentClip = 0; // Always start at first clip
+    currentClip = 0;
     playClip(currentClip);
   }
 
   function pausePlaylist() {
     playlistActive = false;
+    clearTimeout(clipTimeout);
     player.pauseVideo();
   }
 
   function nextVideo() {
+    clearTimeout(clipTimeout);
     currentClip = (currentClip + 1) % clips.length;
-    playClip(currentClip);
+    if (playlistActive) {
+      playClip(currentClip);
+    }
   }
 
   function playClip(index) {
     const clip = clips[index];
+    const duration = (clip.end - clip.start) * 1000; // ms
+
     player.loadVideoById({
       videoId: clip.videoId,
-      startSeconds: clip.start,
-      endSeconds: clip.end
+      startSeconds: clip.start
     });
+
+    // Set timeout to move to next clip
+    clipTimeout = setTimeout(() => {
+      nextVideo();
+    }, duration);
   }
 </script>
 
