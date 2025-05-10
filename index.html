@@ -10,29 +10,8 @@
   .container {
     display: flex;
     flex-direction: column;
-    height: 100vh; /* Fill full screen */
-  }
-
-  .video-container {
-    position: relative;
-    width: 100%;
-    flex: 1 1 auto; /* Take up available vertical space */
-    background: black; /* Prevent blank background flashes */
-  }
-
-  .video-container::before {
-    content: "";
-    display: block;
-    padding-top: 56.25%; /* 16:9 aspect ratio */
-  }
-
-  .video-container iframe, 
-  .video-container #player {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    height: 100vh;
+    overflow: hidden;
   }
 
   .controls {
@@ -47,7 +26,25 @@
     margin: 5px;
     font-size: 16px;
   }
+
+  .video-container {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+  }
+
+  .video-container iframe,
+  .video-container #player {
+    width: auto;
+    height: auto;
+    max-height: calc(100vh - 70px); /* Reserve space for buttons (~70px) */
+    max-width: calc((16 / 9) * (100vh - 70px)); /* Maintain 16:9 ratio */
+    aspect-ratio: 16 / 9;
+  }
 </style>
+
 
 <head>
   <meta charset="UTF-8">
