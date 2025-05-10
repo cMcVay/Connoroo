@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Connoroo</title>
+  <title>YouTube Clip Player</title>
   <style>
     body {
       font-family: sans-serif;
@@ -16,15 +16,17 @@
     }
     button {
       padding: 10px 20px;
-      margin-top: 15px;
+      margin: 5px;
       font-size: 16px;
     }
   </style>
 </head>
 <body>
-  <h1>Now Playing</h1>
+  <h1>YouTube Clip Player</h1>
   <div id="player"></div>
   <br>
+  <button onclick="startPlaylist()">Start Playlist</button>
+  <button onclick="pausePlaylist()">Pause</button>
   <button onclick="nextVideo()">Next Clip</button>
 
   <script>
@@ -36,13 +38,14 @@
 
     // 2. Define the video list with start/end times
     const clips = [
-      { videoId: 'H2snroGWTmU', start: 30, end: 40 }, // Example clip 1
-      { videoId: 'jfXN0R0CwAU', start: 5, end: 15 },   // Example clip 2
+      { videoId: 'dQw4w9WgXcQ', start: 30, end: 40 },
+      { videoId: 'M7lc1UVf-VE', start: 5, end: 15 },
       // Add more clips here
     ];
 
     let player;
     let currentClip = 0;
+    let playlistActive = false;
 
     // 3. Create YouTube player
     function onYouTubeIframeAPIReady() {
@@ -53,7 +56,7 @@
         playerVars: {
           start: clips[currentClip].start,
           end: clips[currentClip].end,
-          autoplay: 1,
+          autoplay: 0,
           controls: 1,
         },
         events: {
@@ -64,24 +67,40 @@
     }
 
     function onPlayerReady(event) {
-      event.target.playVideo();
+      // Do nothing initially
     }
 
-    // 4. Autoplay next clip on end
+    // 4. Autoplay next clip on end if playlist is active
     function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.ENDED) {
+      if (event.data === YT.PlayerState.ENDED && playlistActive) {
         nextVideo();
       }
     }
 
-    function nextVideo() {
-      currentClip = (currentClip + 1) % clips.length;
+    function startPlaylist() {
+      playlistActive = true;
+      playCurrentClip();
+    }
+
+    function pausePlaylist() {
+      playlistActive = false;
+      player.pauseVideo();
+    }
+
+    function playCurrentClip() {
       const clip = clips[currentClip];
       player.loadVideoById({
         videoId: clip.videoId,
         startSeconds: clip.start,
         endSeconds: clip.end
       });
+    }
+
+    function nextVideo() {
+      currentClip = (currentClip + 1) % clips.length;
+      if (playlistActive) {
+        playCurrentClip();
+      }
     }
   </script>
 </body>
