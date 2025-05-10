@@ -1,180 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
-  <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
-
-  .container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
-  }
-
-  .controls {
-    flex: 0 0 auto;
-    padding: 10px;
-    background: #f0f0f0;
-    text-align: center;
-  }
-
-  .controls button {
-    padding: 10px 20px;
-    margin: 5px;
-    font-size: 16px;
-  }
-
-  .video-container {
-    flex: 1 1 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: black;
-  }
-
-  .video-container iframe,
-  .video-container #player {
-    width: auto;
-    height: auto;
-    max-height: calc(100vh - 70px); /* Reserve space for buttons (~70px) */
-    max-width: calc((16 / 9) * (100vh - 70px)); /* Maintain 16:9 ratio */
-    aspect-ratio: 16 / 9;
-  }
-</style>
-
-
 <head>
   <meta charset="UTF-8">
-  <title>YouTube Clip Player</title>
+  <title>Connoroo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      margin-top: 50px;
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Open Sans', sans-serif;
+      overflow: hidden;
+      background-color: #E0F7FA; /* Light turquoise background */
     }
-    #player {
-      margin: auto;
-      width: 640px;
-      height: 360px;
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
     }
-    button {
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #00BCD4; /* Bright turquoise */
+      color: white;
       padding: 10px 20px;
+    }
+
+    .logo {
+      font-family: 'Pacifico', cursive;
+      font-size: 24px;
+    }
+
+    .nav-buttons button {
+      background: #FF7043; /* Coral */
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      margin-left: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .nav-buttons button:hover {
+      background: #FF5722; /* Deeper coral on hover */
+    }
+
+    .main {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      max-width: 960px;
+      background: black;
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .video-container iframe,
+    .video-container #player {
+      width: auto;
+      height: auto;
+      max-height: calc(100vh - 160px); /* Reserve ~header + controls space */
+      max-width: calc((16 / 9) * (100vh - 160px));
+      aspect-ratio: 16 / 9;
+    }
+
+    .controls {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .controls button {
+      background: #FFCA28; /* Sunny yellow */
+      color: black;
+      border: none;
+      padding: 10px 16px;
       margin: 5px;
-      font-size: 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .controls button:hover {
+      background: #FFC107; /* Slightly darker yellow */
     }
   </style>
 </head>
-  
+
 <body>
   <div class="container">
-    <div class="video-container">
-      <div id="player"></div>
+    <div class="header">
+      <div class="logo">Connoroo</div>
+      <div class="nav-buttons">
+        <button>Home</button>
+        <button>About</button>
+        <button>Contact</button>
+      </div>
     </div>
-    <div class="controls">
-      <button onclick="startPlaylist()">Start Playlist</button>
-      <button onclick="pausePlaylist()">Pause / Resume</button>
-      <button onclick="nextVideo()">Next Clip</button>
-      
+
+    <div class="main">
+      <div class="video-container">
+        <div id="player"></div>
+      </div>
+      <div class="controls">
+        <button onclick="startPlaylist()">Start</button>
+        <button onclick="pausePlaylist()">Pause / Resume</button>
+        <button onclick="restartClip()">Restart Clip</button>
+        <button onclick="prevVideo()">Prev</button>
+        <button onclick="nextVideo()">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- YouTube IFrame API -->
   <script>
-  // 1. Load the IFrame Player API
-  let tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  let firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    let tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    let firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-  // 2. Define the video list with start/end times
-  const clips = [
-    { videoId: 'dQw4w9WgXcQ', start: 30, end: 40 },
-    { videoId: 'M7lc1UVf-VE', start: 5, end: 15 },
-    // Add more clips here
-  ];
+    const clips = [
+      { videoId: 'dQw4w9WgXcQ', start: 30, end: 40 },
+      { videoId: 'M7lc1UVf-VE', start: 5, end: 15 },
+      // Add more clips here
+    ];
 
-  let player;
-  let currentClip = 0;
-  let playlistActive = false;
-  let clipTimeout = null;
-  let clipStartTimestamp = null;
-  let remainingTime = null;
-  let paused = false;
+    let player;
+    let currentClip = 0;
+    let playlistActive = false;
+    let clipTimeout = null;
+    let clipStartTimestamp = null;
+    let remainingTime = null;
+    let paused = false;
 
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      height: '360',
-      width: '640',
-      videoId: clips[currentClip].videoId,
-      playerVars: {
-        autoplay: 0,
-        controls: 1,
-      },
-      events: {
-        'onReady': onPlayerReady,
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        videoId: clips[currentClip].videoId,
+        playerVars: {
+          autoplay: 0,
+          controls: 1,
+          modestbranding: 1
+        }
+      });
+    }
+
+    function startPlaylist() {
+      playlistActive = true;
+      currentClip = 0;
+      playClip(currentClip);
+    }
+
+    function pausePlaylist() {
+      if (!paused) {
+        paused = true;
+        clearTimeout(clipTimeout);
+        player.pauseVideo();
+        const elapsed = Date.now() - clipStartTimestamp;
+        remainingTime = Math.max(0, remainingTime ? remainingTime : (clips[currentClip].end - clips[currentClip].start) * 1000 - elapsed);
+      } else {
+        paused = false;
+        player.playVideo();
+        clipStartTimestamp = Date.now();
+        clipTimeout = setTimeout(() => {
+          nextVideo();
+        }, remainingTime);
+        remainingTime = null;
       }
-    });
-  }
+    }
 
-  function onPlayerReady(event) {
-    // Do nothing initially
-  }
-
-  function startPlaylist() {
-    playlistActive = true;
-    currentClip = 0;
-    playClip(currentClip);
-  }
-
-  function pausePlaylist() {
-    if (!paused) {
-      // Pausing
-      paused = true;
+    function nextVideo() {
       clearTimeout(clipTimeout);
-      player.pauseVideo();
-
-      const elapsed = Date.now() - clipStartTimestamp;
-      remainingTime = Math.max(0, remainingTime ? remainingTime : (clips[currentClip].end - clips[currentClip].start) * 1000 - elapsed);
-    } else {
-      // Resuming
+      remainingTime = null;
       paused = false;
-      player.playVideo();
+      currentClip = (currentClip + 1) % clips.length;
+      if (playlistActive) {
+        playClip(currentClip);
+      }
+    }
+
+    function prevVideo() {
+      clearTimeout(clipTimeout);
+      remainingTime = null;
+      paused = false;
+      currentClip = (currentClip - 1 + clips.length) % clips.length;
+      if (playlistActive) {
+        playClip(currentClip);
+      }
+    }
+
+    function restartClip() {
+      clearTimeout(clipTimeout);
+      remainingTime = null;
+      paused = false;
+      playClip(currentClip);
+    }
+
+    function playClip(index) {
+      const clip = clips[index];
+      const duration = (clip.end - clip.start) * 1000;
+
+      player.loadVideoById({
+        videoId: clip.videoId,
+        startSeconds: clip.start
+      });
 
       clipStartTimestamp = Date.now();
       clipTimeout = setTimeout(() => {
         nextVideo();
-      }, remainingTime);
-      remainingTime = null; // Reset
+      }, duration);
+      remainingTime = duration;
     }
-  }
-
-  function nextVideo() {
-    clearTimeout(clipTimeout);
-    remainingTime = null;
-    paused = false;
-    currentClip = (currentClip + 1) % clips.length;
-    if (playlistActive) {
-      playClip(currentClip);
-    }
-  }
-
-  function playClip(index) {
-    const clip = clips[index];
-    const duration = (clip.end - clip.start) * 1000; // ms
-
-    player.loadVideoById({
-      videoId: clip.videoId,
-      startSeconds: clip.start
-    });
-
-    clipStartTimestamp = Date.now();
-    clipTimeout = setTimeout(() => {
-      nextVideo();
-    }, duration);
-    remainingTime = duration;
-  }
-</script>
-
-    </div>
-  </div>
+  </script>
 </body>
 </html>
