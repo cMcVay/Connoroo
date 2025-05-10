@@ -1,5 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+  <style>
+  body {
+    font-family: sans-serif;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .video-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px; /* Optional: max width on desktop */
+    margin: auto;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+  }
+
+  .video-container iframe, 
+  .video-container #player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+  }
+</style>
+
 <head>
   <meta charset="UTF-8">
   <title>YouTube Clip Player</title>
@@ -23,7 +56,10 @@
 </head>
 <body>
   <h1>YouTube Clip Player</h1>
+  <div class="video-container">
   <div id="player"></div>
+</div>
+
   <br>
   <button onclick="startPlaylist()">Start Playlist</button>
   <button onclick="pausePlaylist()">Pause</button>
