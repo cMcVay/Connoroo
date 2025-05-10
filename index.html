@@ -30,78 +30,78 @@
   <button onclick="nextVideo()">Next Clip</button>
 
   <script>
-    // 1. Load the IFrame Player API
-    let tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    let firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  // 1. Load the IFrame Player API
+  let tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  let firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    // 2. Define the video list with start/end times
-    const clips = [
-      { videoId: 'dQw4w9WgXcQ', start: 30, end: 40 },
-      { videoId: 'M7lc1UVf-VE', start: 5, end: 15 },
-      // Add more clips here
-    ];
+  // 2. Define the video list with start/end times
+  const clips = [
+    { videoId: 'dQw4w9WgXcQ', start: 30, end: 40 },
+    { videoId: 'M7lc1UVf-VE', start: 5, end: 15 },
+    // Add more clips here
+  ];
 
-    let player;
-    let currentClip = 0;
-    let playlistActive = false;
+  let player;
+  let currentClip = 0;
+  let playlistActive = false;
 
-    // 3. Create YouTube player
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '360',
-        width: '640',
-        videoId: clips[currentClip].videoId,
-        playerVars: {
-          start: clips[currentClip].start,
-          end: clips[currentClip].end,
-          autoplay: 0,
-          controls: 1,
-        },
-        events: {
-          'onReady': onPlayerReady,
-          'onStateChange': onPlayerStateChange
-        }
-      });
-    }
-
-    function onPlayerReady(event) {
-      // Do nothing initially
-    }
-
-    // 4. Autoplay next clip on end if playlist is active
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.ENDED && playlistActive) {
-        nextVideo();
+  // 3. Create YouTube player
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      height: '360',
+      width: '640',
+      videoId: clips[currentClip].videoId,
+      playerVars: {
+        start: clips[currentClip].start,
+        end: clips[currentClip].end,
+        autoplay: 0,
+        controls: 1,
+      },
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
       }
-    }
+    });
+  }
 
-    function startPlaylist() {
-      playlistActive = true;
-      playCurrentClip();
-    }
+  function onPlayerReady(event) {
+    // Do nothing initially
+  }
 
-    function pausePlaylist() {
-      playlistActive = false;
-      player.pauseVideo();
+  // Autoplay next clip on end if playlist is active
+  function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.ENDED && playlistActive) {
+      nextVideo(); // Move to next automatically
     }
+  }
 
-    function playCurrentClip() {
-      const clip = clips[currentClip];
-      player.loadVideoById({
-        videoId: clip.videoId,
-        startSeconds: clip.start,
-        endSeconds: clip.end
-      });
-    }
+  function startPlaylist() {
+    playlistActive = true;
+    currentClip = 0; // Always start at first clip
+    playClip(currentClip);
+  }
 
-    function nextVideo() {
-      currentClip = (currentClip + 1) % clips.length;
-      if (playlistActive) {
-        playCurrentClip();
-      }
-    }
-  </script>
+  function pausePlaylist() {
+    playlistActive = false;
+    player.pauseVideo();
+  }
+
+  function nextVideo() {
+    currentClip = (currentClip + 1) % clips.length;
+    playClip(currentClip);
+  }
+
+  function playClip(index) {
+    const clip = clips[index];
+    player.loadVideoById({
+      videoId: clip.videoId,
+      startSeconds: clip.start,
+      endSeconds: clip.end
+    });
+  }
+</script>
+
 </body>
 </html>
