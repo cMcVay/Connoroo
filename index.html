@@ -1,62 +1,88 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Connoroo</title>
-  </head>
-  <body>
-    <h1>Now Playing</h1>
-    //1. Add div for video player //
-    <div id="player"></div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>YouTube Clip Player</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #player {
+      margin: auto;
+      width: 640px;
+      height: 360px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>YouTube Clip Player</h1>
+  <div id="player"></div>
+  <br>
+  <button onclick="nextVideo()">Next Clip</button>
 
-    //2. create iframe player API code//
-    <script>
-      var tag = document.createElement('script');
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  <script>
+    // 1. Load the IFrame Player API
+    let tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    let firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-      //3. This function creates an iframe and Youtube player//
-      var player;
-      function onYoutubeIframeAPIReady() {
-        player = new YT.Player('player', {
-          height: '390',
-          width: '640',
-          videoId: 'H2snroGWTmU',
-          playerVars: {
-            'playsinline' : 1
-          },
-          events: {
-            'onReady' : onPlayerReady,
-            'onStateChange' : onPlayerStateChange
-          }
-        });
-      }
+    // 2. Define the video list with start/end times
+    const clips = [
+      { videoId: 'dQw4w9WgXcQ', start: 30, end: 40 }, // Example clip 1
+      { videoId: 'M7lc1UVf-VE', start: 5, end: 15 },   // Example clip 2
+      // Add more clips here
+    ];
 
-      //4. The API will call this function when the video player is ready.//
-      function onPlayerReady(event) {
-        event.target.playVideo();
-      }
-      //5. The API calls this funciton when the player's state changes.
-      var done = false;
-      function onPlayerStateChange(event) { 
-        if (event.data == YT.PlayerState.PLAYING && !done) { 
-          setTimeout(stopVideo, 6000);
-          done = true;
+    let player;
+    let currentClip = 0;
+
+    // 3. Create YouTube player
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '360',
+        width: '640',
+        videoId: clips[currentClip].videoId,
+        playerVars: {
+          start: clips[currentClip].start,
+          end: clips[currentClip].end,
+          autoplay: 1,
+          controls: 1,
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
         }
+      });
+    }
+
+    function onPlayerReady(event) {
+      event.target.playVideo();
+    }
+
+    // 4. Autoplay next clip on end
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        nextVideo();
       }
-      function stopVideo() {
-        player.stopVideo();
-      }
-      </script>
-    <iframe 
-      width="560" 
-      height="315" 
-      src="https://www.youtube.com/embed/H2snroGWTmU?si=xwDl9wmHS5dPN1yh" 
-      title="YouTube video player" 
-      frameborder="0" 
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-      referrerpolicy="strict-origin-when-cross-origin" 
-      allowfullscreen>
-    </iframe>
-  </body>
+    }
+
+    function nextVideo() {
+      currentClip = (currentClip + 1) % clips.length;
+      const clip = clips[currentClip];
+      player.loadVideoById({
+        videoId: clip.videoId,
+        startSeconds: clip.start,
+        endSeconds: clip.end
+      });
+    }
+  </script>
+</body>
 </html>
