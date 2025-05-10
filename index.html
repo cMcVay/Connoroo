@@ -1,21 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
   <style>
-  body {
-    font-family: sans-serif;
-    text-align: center;
-    margin-top: 20px;
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Fill full screen */
   }
 
   .video-container {
     position: relative;
     width: 100%;
-    max-width: 100%; /* Optional: max width on desktop */
-    max-height: 90%;
-    margin: auto;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
-    height: 0;
-    overflow: hidden;
+    flex: 1 1 auto; /* Take up available vertical space */
+    background: black; /* Prevent blank background flashes */
+  }
+
+  .video-container::before {
+    content: "";
+    display: block;
+    padding-top: 56.25%; /* 16:9 aspect ratio */
   }
 
   .video-container iframe, 
@@ -27,7 +35,14 @@
     height: 100%;
   }
 
-  button {
+  .controls {
+    flex: 0 0 auto;
+    padding: 10px;
+    background: #f0f0f0;
+    text-align: center;
+  }
+
+  .controls button {
     padding: 10px 20px;
     margin: 5px;
     font-size: 16px;
@@ -56,16 +71,15 @@
   </style>
 </head>
 <body>
-  <h1>YouTube Clip Player</h1>
-  <div class="video-container">
-  <div id="player"></div>
-</div>
-
-  <br>
-  <button onclick="startPlaylist()">Start Playlist</button>
-  <button onclick="pausePlaylist()">Pause</button>
-  <button onclick="nextVideo()">Next Clip</button>
-
+  <div class="container">
+    <div class="video-container">
+      <div id="player"></div>
+    </div>
+    <div class="controls">
+      <button onclick="startPlaylist()">Start Playlist</button>
+      <button onclick="pausePlaylist()">Pause / Resume</button>
+      <button onclick="nextVideo()">Next Clip</button>
+      
   <script>
   // 1. Load the IFrame Player API
   let tag = document.createElement('script');
@@ -162,6 +176,7 @@
   }
 </script>
 
-
+    </div>
+  </div>
 </body>
 </html>
