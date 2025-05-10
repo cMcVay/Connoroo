@@ -54,6 +54,11 @@
       background: #FF5722; /* Deeper coral on hover */
     }
 
+    .nav-buttons button.active {
+      background: #FFC107; /* Sunny yellow when active */
+      color: black;
+    }
+
     .main {
       flex: 1 1 auto;
       display: flex;
@@ -64,11 +69,10 @@
     }
 
     .video-container {
-      position: relative;
-      width: 100%;
-      max-width: 960px;
-      background: black;
       flex-grow: 1;
+      width: 100%;
+      height: 100%;
+      background: black;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -76,12 +80,11 @@
 
     .video-container iframe,
     .video-container #player {
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100%;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
     }
-
 
     .controls {
       margin-top: 10px;
@@ -111,9 +114,10 @@
     <div class="header">
       <div class="logo">Connoroo</div>
       <div class="nav-buttons">
-        <button>Home</button>
-        <button>About</button>
-        <button>Contact</button>
+        <button onclick="switchPlaylist('inhaler')" id="inhalerBtn">Inhaler</button>
+        <button onclick="switchPlaylist('mumford')" id="mumfordBtn">Mumford & Sons</button>
+        <button onclick="switchPlaylist('national')" id="nationalBtn">The National</button>
+        <button onclick="switchPlaylist('foster')" id="fosterBtn">Foster the People</button>
       </div>
     </div>
 
@@ -138,15 +142,28 @@
     let firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    const clips = [
-      { videoId: 'MBBK5d52oQQ', start: 11, end: 266 },
-      { videoId: 'kNCtMEaSqDg', start: 54, end: 459 },
-      { videoId: '258dYG5EkmU', start: 54, end: 459 },
-      { videoId: '_OOrjMjeUqg', start: 54, end: 459 },
-      // Add more clips here
-    ];
+    // Define playlists
+    const playlists = {
+      inhaler: [
+        { videoId: 'dQw4w9WgXcQ', start: 30, end: 40 },
+        { videoId: 'M7lc1UVf-VE', start: 5, end: 15 }
+      ],
+      mumford: [
+        { videoId: 'ScMzIvxBSi4', start: 20, end: 30 },
+        { videoId: 'eY52Zsg-KVI', start: 10, end: 25 }
+      ],
+      national: [
+        { videoId: 'kXYiU_JCYtU', start: 50, end: 60 },
+        { videoId: 'hLQl3WQQoQ0', start: 15, end: 25 }
+      ],
+      foster: [
+        { videoId: '3tmd-ClpJxA', start: 5, end: 20 },
+        { videoId: '2Vv-BfVoq4g', start: 30, end: 45 }
+      ]
+    };
 
     let player;
+    let clips = playlists.inhaler; // default
     let currentClip = 0;
     let playlistActive = false;
     let clipTimeout = null;
@@ -230,6 +247,28 @@
         nextVideo();
       }, duration);
       remainingTime = duration;
+    }
+
+    function switchPlaylist(name) {
+      clearTimeout(clipTimeout);
+      paused = false;
+      playlistActive = true;
+      clips = playlists[name];
+      currentClip = 0;
+      highlightActiveButton(name);
+      playClip(currentClip);
+    }
+
+    function highlightActiveButton(activeName) {
+      const btnIds = ['inhaler', 'mumford', 'national', 'foster'];
+      btnIds.forEach(name => {
+        const btn = document.getElementById(name + 'Btn');
+        if (name === activeName) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
     }
   </script>
 </body>
