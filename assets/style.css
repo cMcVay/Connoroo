@@ -61,6 +61,56 @@ body {
     text-decoration: underline;
 }
 
+/* ───── HAMBURGER + BAND DROPDOWN ───────────────────────── */
+
+.menu-toggle {
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: var(--cream);
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* hidden by default */
+.band-menu {
+  position: fixed;
+  top: 58px;          /* navbar height */
+  right: 0;
+  background: var(--orange);
+  padding: 1rem;
+  display: none;
+  z-index: 1000;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-bottom-left-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgb(0 0 0 / .25);
+}
+
+.band-menu ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.band-menu a {
+  color: var(--cream);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.band-menu a:hover {
+  text-decoration: underline;
+}
+
+/* class added by JS when menu is open */
+.band-menu.open { display: block; }
+
+/* always show hamburger, hide band links from the topbar */
+.menu-toggle { display: block; }
+
 /* ---------- HOME ---------- */
 .hero {
     min-height: 100vh;
