@@ -64,7 +64,7 @@ body {
 /* ---------- HOME ---------- */
 .hero {
     min-height: 100vh;
-    background: url('../assets/images/ConnorooLineup.png') no-repeat center/cover;
+    background: url('../assets/ConnorooLineup.png') no-repeat center/cover;
     display: flex;
     flex-direction: column;
     justify-content: center;
