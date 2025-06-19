@@ -47,35 +47,47 @@
   <!-- ────────────────────────────────────────────────────────────── -->
 
   <!-- ─── SCHEDULE CONTENT ──────────────────────────────────────── -->
-  <section style="padding:2rem;max-width:900px;margin:0 auto;">
-    <h2 style="font-family:'Bungee',cursive;color:var(--orange);margin-bottom:1rem;">
-      Festival Schedule
-    </h2>
+<section class="schedule">
+  <h2 class="schedule-title">Festival Schedule</h2>
 
-    <!-- replace this table with your real set times -->
-    <table style="width:100%;border-collapse:collapse;">
-      <thead>
-        <tr style="background:var(--sage);color:var(--cream);">
-          <th style="padding:.6rem;">Stage</th>
-          <th style="padding:.6rem;">Time</th>
-          <th style="padding:.6rem;">Artist</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="padding:.6rem;border-bottom:1px solid var(--sage);">Sunshine Stage</td>
-          <td style="padding:.6rem;border-bottom:1px solid var(--sage);">2:00 PM</td>
-          <td style="padding:.6rem;border-bottom:1px solid var(--sage);">The Foxies</td>
-        </tr>
-        <tr>
-          <td style="padding:.6rem;border-bottom:1px solid var(--sage);">Harbor Stage</td>
-          <td style="padding:.6rem;border-bottom:1px solid var(--sage);">3:30 PM</td>
-          <td style="padding:.6rem;border-bottom:1px solid var(--sage);">Future Islands</td>
-        </tr>
-        <!-- add more rows as needed -->
-      </tbody>
-    </table>
-  </section>
+  <div class="schedule-grid">
+    <!-- Moonfox Stage -->
+    <div class="stage-column">
+      <h3>Moonfox Stage</h3>
+      <ul class="setlist">
+        <li><time>12 : 00 PM</time> • The Foxies</li>
+        <li><time>1 : 45 PM</time> • Carly Rae Jepsen</li>
+        <li><time>3 : 30 PM</time> • The National</li>
+        <li><time>5 : 15 PM</time> • Imagine Dragons</li>
+        <li><time>7 : 00 PM</time> • The Killers</li>
+      </ul>
+    </div>
+
+    <!-- Otter Stage -->
+    <div class="stage-column">
+      <h3>Otter Stage</h3>
+      <ul class="setlist">
+        <li><time>12 : 30 PM</time> • Brigette Calls Me Baby</li>
+        <li><time>2 : 15 PM</time> • MisterWives</li>
+        <li><time>4 : 00 PM</time> • Of Monsters and Men</li>
+        <li><time>5 : 45 PM</time> • CHVRCHES</li>
+        <li><time>7 : 30 PM</time> • Florence + The Machine</li>
+      </ul>
+    </div>
+
+    <!-- Park Stage -->
+    <div class="stage-column">
+      <h3>Park Stage</h3>
+      <ul class="setlist">
+        <li><time>1 : 00 PM</time> • Future Islands</li>
+        <li><time>2 : 45 PM</time> • Inhaler</li>
+        <li><time>4 : 30 PM</time> • Ellie Goulding</li>
+        <li><time>6 : 15 PM</time> • Mumford & Sons</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
   <!-- ────────────────────────────────────────────────────────────── -->
 
   <!-- hamburger JS -->
