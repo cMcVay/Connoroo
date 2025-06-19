@@ -38,18 +38,34 @@ function loadClip(index, autoplay = true) {
 
 /* Detect clip end (ENDED **or** PAUSED-at-end) -------------------------- */
 function handleState(ev) {
-  const END   = YT.PlayerState.ENDED;
-  const PAUSE = YT.PlayerState.PAUSED;
+  // YouTube state constants for readability
+  const UNSTARTED = -1,
+        ENDED     =  0,
+        PLAYING   =  1,
+        PAUSED    =  2,
+        BUFFERING =  3;
 
-  if (ev.data === END)      { next(); return; }
+  // Current clip metadata & clock
+  const clip      = playlist[current];
+  const now       = player.getCurrentTime().toFixed(2);
 
-  if (ev.data === PAUSE) {
-    // Some browsers emit PAUSED at endSeconds instead of ENDED
-    const clip = playlist[current];
-    const t    = player.getCurrentTime();
-    if (Math.abs(t - clip.end) < 0.5) next();
+  console.log(
+    `[YT] state=${ev.data}  time=${now}s  clipEnd=${clip.end}s  clipIndex=${current}`
+  );
+
+  /* -- auto-advance ---------------------------------------------------- */
+  if (ev.data === ENDED) {                // whole video finished
+    next();
+    return;
+  }
+
+  if (ev.data === PAUSED) {               // paused – is it because we hit endSeconds?
+    if (Math.abs(now - clip.end) < 0.6) { // within ±0.6 s of declared stop
+      next();
+    }
   }
 }
+
 
 /* Transport controls ---------------------------------------------------- */
 function start()   { if (!started) { started = true; loadClip(current); } }
