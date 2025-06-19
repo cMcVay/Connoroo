@@ -1,19 +1,24 @@
-/* Connoroo YouTube controller — v3  */
+/* Connoroo YouTube controller — resilient v4 --------------------------- */
 let player;
-let playlist  = window.playlist || [];
-let current   = 0;
-let started   = false;          // blocks autoplay until user clicks Start
+let playlist   = window.playlist || [];
+let current    = 0;
+let started    = false;
+let watchdogID = null;
 
-/* YT API bootstrap ------------------------------------------------------ */
+/* YT boot --------------------------------------------------------------- */
 function onYouTubeIframeAPIReady() {
   if (!document.getElementById("player") || !playlist.length) return;
-  loadClip(current, /*autoplay=*/false);   // waits for Start button
+  cueClip(current);                 // cue but don’t autoplay until Start
 }
 
-/* Core loader ----------------------------------------------------------- */
-function loadClip(index, autoplay = true) {
+/* Cue or load a clip ---------------------------------------------------- */
+function cueClip(index, autoplay = true) {
   const clip = playlist[index];
   if (!clip) return;
+
+  // Set up watchdog before (re)loading
+  clearInterval(watchdogID);
+  watchdogID = setInterval(() => checkEndGuard(clip.end), 250);
 
   const opts = {
     videoId:      clip.id,
@@ -22,56 +27,37 @@ function loadClip(index, autoplay = true) {
   };
 
   if (player) {
-    player.loadVideoById(opts);             // auto-plays by default
-    if (!autoplay) player.pauseVideo();     // honour initial “click to start”
+    player.loadVideoById(opts);     // will auto-play unless we pause below
+    if (!autoplay) player.pauseVideo();
   } else {
     player = new YT.Player("player", {
       playerVars: { rel: 0, modestbranding: 1 },
       events: {
-        onReady:   e => { loadClip(index, autoplay); },
+        onReady:   () => { if (!started) player.pauseVideo(); },
         onStateChange: handleState,
-        onError:  e => console.error("YouTube error", e.data, "for clip", index),
+        onError:  e => console.error("YT error", e.data, "clip", index),
       },
     });
   }
 }
 
-/* Detect clip end (ENDED **or** PAUSED-at-end) -------------------------- */
-function handleState(ev) {
-  // YouTube state constants for readability
-  const UNSTARTED = -1,
-        ENDED     =  0,
-        PLAYING   =  1,
-        PAUSED    =  2,
-        BUFFERING =  3;
-
-  // Current clip metadata & clock
-  const clip      = playlist[current];
-  const now       = player.getCurrentTime().toFixed(2);
-
-  console.log(
-    `[YT] state=${ev.data}  time=${now}s  clipEnd=${clip.end}s  clipIndex=${current}`
-  );
-
-  /* -- auto-advance ---------------------------------------------------- */
-  if (ev.data === ENDED) {                // whole video finished
-    next();
-    return;
-  }
-
-  if (ev.data === PAUSED) {               // paused – is it because we hit endSeconds?
-    if (Math.abs(now - clip.end) < 0.6) { // within ±0.6 s of declared stop
-      next();
-    }
-  }
+/* Manual guard for “locked” videos ------------------------------------- */
+function checkEndGuard(end) {
+  if (!player || player.getPlayerState() !== YT.PlayerState.PLAYING) return;
+  if (player.getCurrentTime() >= end - 0.3) next();
 }
 
+/* Normal state handler (fast path) ------------------------------------- */
+function handleState(ev) {
+  if (ev.data === YT.PlayerState.ENDED) next();
+}
 
-/* Transport controls ---------------------------------------------------- */
-function start()   { if (!started) { started = true; loadClip(current); } }
-function reset()   { current = 0; started = false; player.stopVideo(); }
-function next()    { current = (current + 1) % playlist.length; loadClip(current); }
-function prev()    { current = (current - 1 + playlist.length) % playlist.length; loadClip(current); }
+/* Controls ------------------------------------------------------------- */
+function start()   { if (!started) { started = true; cueClip(current); } }
+function reset()   { player?.stopVideo(); current = 0; started = false; }
+function next()    { current = (current + 1) % playlist.length; cueClip(current); }
+function prev()    { current = (current - 1 + playlist.length) % playlist.length; cueClip(current); }
 function pause()   { player?.pauseVideo(); }
-function resume()  { player?.playVideo(); }
+function resume()  { player?.playVideo();  }
 function full()    { document.getElementById("player")?.requestFullscreen?.(); }
+
