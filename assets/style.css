@@ -1,0 +1,183 @@
+
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+
+:root {
+    --orange: #dc5a19;
+    --mauve:  #aa6e9e;
+    --navy:   #135282;
+    --olive:  #42531a;
+    --sage:   #889976;
+    --cream:  #fbf6e3;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--navy);
+    background-color: var(--cream);
+    line-height: 1.6;
+}
+
+/* ---------- NAVBAR ---------- */
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: var(--orange);
+    color: var(--cream);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex-wrap: wrap;
+}
+
+.navbar .logo a {
+    font-family: 'Bungee', cursive;
+    font-size: 1.8rem;
+    color: var(--cream);
+    text-decoration: none;
+    letter-spacing: 2px;
+}
+
+.nav-links {
+    list-style: none;
+    margin-left: auto;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* ---------- HOME ---------- */
+.hero {
+    min-height: 100vh;
+    background: url('../assets/images/ConnorooLineup.png') no-repeat center/cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.hero h1 {
+    font-family: 'Bungee', cursive;
+    font-size: clamp(3rem, 5vw, 6rem);
+    color: var(--cream);
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+}
+
+/* ---------- EVENT PAGE ---------- */
+.event-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.event-grid img {
+    width: 100%;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.description h2 {
+    font-family: 'Bungee', cursive;
+    color: var(--orange);
+    margin-bottom: 0.5rem;
+}
+
+.description h3 {
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
+    color: var(--olive);
+}
+
+/* ---------- FAQ ---------- */
+.faq {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+details {
+    margin-bottom: 1rem;
+    background: var(--sage);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--cream);
+    user-select: none;
+}
+
+details p {
+    padding-top: 0.5rem;
+    color: var(--cream);
+}
+
+/* ---------- PLAYER PAGE ---------- */
+.player-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+#player {
+    width: 100%;
+    height: 500px;
+    aspect-ratio: 16 / 9;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.controls {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.controls button {
+    padding: 0.6rem 1rem;
+    background: var(--orange);
+    color: var(--cream);
+    border: none;
+    border-radius: 0.3rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.controls button:hover {
+    background: var(--mauve);
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+    }
+}

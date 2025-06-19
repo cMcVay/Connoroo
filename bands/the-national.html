@@ -1,0 +1,44 @@
+
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Connoroo | The National</title>
+            <link rel="stylesheet" href="../assets/style.css" />
+        </head>
+        <body>
+
+<nav class="navbar">
+    <div class="logo"><a href="../index.html">CONNOROO</a></div>
+    <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li><li><a href="../event.html">Event Info</a></li><li><a href="../bands/the-foxies.html">The Foxies</a></li><li><a href="../bands/future-islands.html">Future Islands</a></li><li><a href="../bands/brigette-calls-me-baby.html">Brigette Calls Me Baby</a></li><li><a href="../bands/misterwives.html">MisterWives</a></li><li><a href="../bands/inhaler.html">Inhaler</a></li><li><a href="../bands/carly-rae-jepsen.html">Carly Rae Jepsen</a></li><li><a href="../bands/chvrches.html">CHVRCHES</a></li><li><a href="../bands/ellie-goulding.html">Ellie Goulding</a></li><li><a href="../bands/of-monsters-and-men.html">Of Monsters and Men</a></li><li><a href="../bands/florence-and-the-machine.html">Florence + The Machine</a></li><li><a href="../bands/imagine-dragons.html">Imagine Dragons</a></li><li><a href="../bands/the-national.html">The National</a></li><li><a href="../bands/the-killers.html">The Killers</a></li><li><a href="../bands/mumford-and-sons.html">Mumford &amp; Sons</a></li>
+    </ul>
+</nav>
+
+            <main class="player-container">
+                <div id="player"></div>
+                <div class="controls">
+                    <button onclick="startPlaylist()">Start</button>
+                    <button onclick="resetPlaylist()">Reset</button>
+                    <button onclick="prevVideo()">Prev</button>
+                    <button onclick="pauseVideo()">Pause</button>
+                    <button onclick="nextVideo()">Next</button>
+                    <button onclick="expandFullscreen()">Fullscreen</button>
+                </div>
+            </main>
+
+
+<script>
+    // TODO: Replace placeholder video IDs and timecodes with real ones
+    window.playlist = [
+        {{id: 'dQw4w9WgXcQ', start: 0, end: 30}},
+        {{id: 'kJQP7kiw5Fk', start: 10, end: 40}}
+    ];
+</script>
+
+
+            <script src="https://www.youtube.com/iframe_api"></script>
+            <script src="../script.js"></script>
+        </body>
+        </html>
