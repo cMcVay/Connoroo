@@ -231,3 +231,34 @@ details p {
         width: 100%;
     }
 }
+
+/* ───── SCHEDULE LAYOUT ────────────────────────────── */
+
+.schedule       { padding: 2rem; max-width: 1200px; margin: 0 auto; }
+.schedule-title { font-family: 'Bungee', cursive; color: var(--orange);
+                  margin-bottom: 1.5rem; text-align: center; }
+
+.schedule-grid  { display: grid;
+                  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                  gap: 1.5rem; }
+
+.stage-column   { background: var(--sage);
+                  border-radius: 0.5rem;
+                  box-shadow: 0 4px 8px rgb(0 0 0 / .08);
+                  padding: 1rem; color: var(--cream); }
+
+.stage-column h3{ margin-bottom: 0.75rem;
+                  font-size: 1.25rem; letter-spacing: .5px; }
+
+.setlist        { list-style: none; display: flex;
+                  flex-direction: column; gap: .6rem; }
+
+.setlist time   { font-variant-numeric: tabular-nums;
+                  font-weight: 600; }
+
+.setlist li     { line-height: 1.4; }
+
+/* small-screen tweak: a little extra gap */
+@media (max-width: 480px) {
+  .schedule-grid { gap: 1rem; }
+}
