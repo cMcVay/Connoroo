@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connoroo | Schedule</title>
+
+  <!-- main stylesheet -->
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+
+  <!-- ─── TOP NAVBAR ─────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="logo"><a href="index.html">CONNOROO</a></div>
+
+    <!-- always-visible tabs -->
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="event.html">Event Info</a></li>
+      <li><a href="schedule.html">Schedule</a></li>
+    </ul>
+
+    <!-- hamburger for band list -->
+    <button class="menu-toggle" aria-label="Toggle band menu">☰</button>
+  </nav>
+
+  <!-- dropdown list of all bands -->
+  <div class="band-menu" id="bandMenu">
+    <ul>
+      <li><a href="bands/the-foxies.html">The Foxies</a></li>
+      <li><a href="bands/future-islands.html">Future Islands</a></li>
+      <li><a href="bands/brigette-calls-me-baby.html">Brigette Calls Me Baby</a></li>
+      <li><a href="bands/misterwives.html">MisterWives</a></li>
+      <li><a href="bands/inhaler.html">Inhaler</a></li>
+      <li><a href="bands/carly-rae-jepsen.html">Carly Rae Jepsen</a></li>
+      <li><a href="bands/chvrches.html">CHVRCHES</a></li>
+      <li><a href="bands/ellie-goulding.html">Ellie Goulding</a></li>
+      <li><a href="bands/of-monsters-and-men.html">Of Monsters and Men</a></li>
+      <li><a href="bands/florence-and-the-machine.html">Florence + The Machine</a></li>
+      <li><a href="bands/imagine-dragons.html">Imagine Dragons</a></li>
+      <li><a href="bands/the-national.html">The National</a></li>
+      <li><a href="bands/the-killers.html">The Killers</a></li>
+      <li><a href="bands/mumford-and-sons.html">Mumford & Sons</a></li>
+    </ul>
+  </div>
+  <!-- ────────────────────────────────────────────────────────────── -->
+
+  <!-- ─── SCHEDULE CONTENT ──────────────────────────────────────── -->
+  <section style="padding:2rem;max-width:900px;margin:0 auto;">
+    <h2 style="font-family:'Bungee',cursive;color:var(--orange);margin-bottom:1rem;">
+      Festival Schedule
+    </h2>
+
+    <!-- replace this table with your real set times -->
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="background:var(--sage);color:var(--cream);">
+          <th style="padding:.6rem;">Stage</th>
+          <th style="padding:.6rem;">Time</th>
+          <th style="padding:.6rem;">Artist</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:.6rem;border-bottom:1px solid var(--sage);">Sunshine Stage</td>
+          <td style="padding:.6rem;border-bottom:1px solid var(--sage);">2:00 PM</td>
+          <td style="padding:.6rem;border-bottom:1px solid var(--sage);">The Foxies</td>
+        </tr>
+        <tr>
+          <td style="padding:.6rem;border-bottom:1px solid var(--sage);">Harbor Stage</td>
+          <td style="padding:.6rem;border-bottom:1px solid var(--sage);">3:30 PM</td>
+          <td style="padding:.6rem;border-bottom:1px solid var(--sage);">Future Islands</td>
+        </tr>
+        <!-- add more rows as needed -->
+      </tbody>
+    </table>
+  </section>
+  <!-- ────────────────────────────────────────────────────────────── -->
+
+  <!-- hamburger JS -->
+  <script src="nav.js"></script>
+</body>
+</html>
