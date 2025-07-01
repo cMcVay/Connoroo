@@ -127,8 +127,7 @@ body {
     font-family: 'Bungee', cursive;
     font-size: clamp(3rem, 5vw, 6rem);
     color: var(--cream);
-    background-color: black;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+    text-shadow: 5px 5px 15px rgba(0,0,0,0.4);
 }
 
 /* ---------- EVENT PAGE ---------- */
