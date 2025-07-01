@@ -1,5 +1,4 @@
-
-        <!DOCTYPE html>
+  <!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8" />
@@ -10,30 +9,66 @@
         <body>
 
 <nav class="navbar">
-    <div class="logo"><a href="../index.html">CONNOROO</a></div>
-    <ul class="nav-links">
-        <li><a href="../index.html">Home</a></li><li><a href="../event.html">Event Info</a></li><li><a href="../bands/the-foxies.html">The Foxies</a></li><li><a href="../bands/future-islands.html">Future Islands</a></li><li><a href="../bands/brigette-calls-me-baby.html">Brigette Calls Me Baby</a></li><li><a href="../bands/misterwives.html">MisterWives</a></li><li><a href="../bands/inhaler.html">Inhaler</a></li><li><a href="../bands/carly-rae-jepsen.html">Carly Rae Jepsen</a></li><li><a href="../bands/chvrches.html">CHVRCHES</a></li><li><a href="../bands/ellie-goulding.html">Ellie Goulding</a></li><li><a href="../bands/of-monsters-and-men.html">Of Monsters and Men</a></li><li><a href="../bands/florence-and-the-machine.html">Florence + The Machine</a></li><li><a href="../bands/imagine-dragons.html">Imagine Dragons</a></li><li><a href="../bands/the-national.html">The National</a></li><li><a href="../bands/the-killers.html">The Killers</a></li><li><a href="../bands/mumford-and-sons.html">Mumford &amp; Sons</a></li>
-    </ul>
+  <div class="logo"><a href="../index.html">CONNOROO</a></div>
+
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../event.html">Event Info</a></li>
+    <li><a href="../schedule.html">Schedule</a></li>
+  </ul>
+
+  <button class="menu-toggle" aria-label="Toggle band menu">☰</button>
 </nav>
+
+<div class="band-menu" id="bandMenu">
+  <ul>
+    <li><a href="the-foxies.html">The Foxies</a></li>
+    <li><a href="future-islands.html">Future Islands</a></li>
+    <li><a href="brigette-calls-me-baby.html">Brigette Calls Me Baby</a></li>
+    <li><a href="misterwives.html">MisterWives</a></li>
+    <li><a href="inhaler.html">Inhaler</a></li>
+    <li><a href="carly-rae-jepsen.html">Carly Rae Jepsen</a></li>
+    <li><a href="chvrches.html">CHVRCHES</a></li>
+    <li><a href="ellie-goulding.html">Ellie Goulding</a></li>
+    <li><a href="of-monsters-and-men.html">Of Monsters and Men</a></li>
+    <li><a href="florence-and-the-machine.html">Florence + The Machine</a></li>
+    <li><a href="imagine-dragons.html">Imagine Dragons</a></li>
+    <li><a href="the-national.html">The National</a></li>
+    <li><a href="the-killers.html">The Killers</a></li>
+    <li><a href="mumford-and-sons.html">Mumford & Sons</a></li>
+  </ul>
+</div>
+
+<script src="../nav.js"></script>
+
 
             <main class="player-container">
                 <div id="player"></div>
                 <div class="controls">
-                    <button onclick="startPlaylist()">Start</button>
-                    <button onclick="resetPlaylist()">Reset</button>
-                    <button onclick="prevVideo()">Prev</button>
-                    <button onclick="pauseVideo()">Pause</button>
-                    <button onclick="nextVideo()">Next</button>
-                    <button onclick="expandFullscreen()">Fullscreen</button>
+                        <button onclick="start()">Start</button>
+                        <button onclick="reset()">Reset</button>
+                        <button onclick="prev()">Prev</button>
+                        <button onclick="pause()">Pause</button>
+                        <button onclick="resume()">Resume</button>
+                        <button onclick="next()">Next</button>
+                        <button onclick="full()">Fullscreen</button>
                 </div>
+
             </main>
 
 
 <script>
     // TODO: Replace placeholder video IDs and timecodes with real ones
     window.playlist = [
-        {{id: 'dQw4w9WgXcQ', start: 0, end: 30}},
-        {{id: 'kJQP7kiw5Fk', start: 10, end: 40}}
+        {id: 'uWd0EWKpH94', start: 595, end: 867},
+        {id: 'uWd0EWKpH94', start: 7324, end: 7597},
+        {id: 'X1jbtlYcWng', start: 251, end: 494},
+        {id: 'X1jbtlYcWng', start: 1023, end: 1331},
+        {id: 'AcVnjOaB1A4', start: 3510, end: 3761},
+        {id: 'X1jbtlYcWng', start: 3242, end: 3488},
+        {id: 'jMxiLHENDFI', start: 07, end: 280},
+        {id: '1I2nGoPXwXk', start: 3005, end: 3393},
+        {id: 'uWd0EWKpH94', start: 1096, end: 1616}
     ];
 </script>
 
