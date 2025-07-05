@@ -1,1 +1,80 @@
+  <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Connoroo | Love Fame Tragedy & The Wombats</title>
+            <link rel="stylesheet" href="../assets/style.css" />
+        </head>
+        <body>
 
+<nav class="navbar">
+  <div class="logo"><a href="../index.html">CONNOROO</a></div>
+
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../event.html">Event Info</a></li>
+    <li><a href="../schedule.html">Schedule</a></li>
+  </ul>
+
+  <button class="menu-toggle" aria-label="Toggle band menu">☰</button>
+</nav>
+
+<div class="band-menu" id="bandMenu">
+  <ul>
+    <li><a href="inhaler.html">Inhaler</a></li>
+    <li><a href="misterwives.html">MisterWives</a></li>
+    <li><a href="carly-rae-jepsen.html">Carly Rae Jepsen</a></li>
+    <li><a href="ellie-goulding.html">Ellie Goulding</a></li>
+    <li><a href="empire-of-the-sun.html">Empire of the Sun</a></li>
+    <li><a href="foster-the-people.html">Foster the People</a></li>
+    <li><a href="chvrches.html">CHVRCHES</a></li>
+    <li><a href="young-the-giant.html">Young The Giant</a></li>
+    <li><a href="of-monsters-and-men.html">Of Monsters and Men</a></li>
+    <li><a href="florence-and-the-machine.html">Florence + The Machine</a></li>
+    <li><a href="lft-the-wombats.html">Love Fame Tragedy/Wombats</a></li>
+    <li><a href="imagine-dragons.html">Imagine Dragons</a></li>
+    <li><a href="the-national.html">The National</a></li>
+    <li><a href="the-killers.html">The Killers</a></li>
+    <li><a href="mumford-and-sons.html">Mumford & Sons</a></li>
+  </ul>
+</div>
+
+<script src="../nav.js"></script>
+
+
+            <main class="player-container">
+                <div id="player"></div>
+                <div class="controls">
+                        <button onclick="start()">Start</button>
+                        <button onclick="reset()">Reset</button>
+                        <button onclick="prev()">Prev</button>
+                        <button onclick="pause()">Pause</button>
+                        <button onclick="resume()">Resume</button>
+                        <button onclick="next()">Next</button>
+                        <button onclick="full()">Fullscreen</button>
+                </div>
+
+            </main>
+
+
+<script>
+    // TODO: Replace placeholder video IDs and timecodes with real ones
+    window.playlist = [
+        {id: 'XmyXKo0ijfQ', start: 00, end: 184},
+        {id: 'qytnZQY2F_E', start: 00, end: 122},
+        {id: '9OU-qkjeEgs', start: 00, end: 197},
+        {id: 'QeaP82UbobQ', start: 00, end: 177},
+        {id: 'Jum4eWcm6H0', start: 00, end: 179},
+        {id: 'hLMAfF6qh-A', start: 00, end: 208},
+        {id: '8CWus326c6g', start: 00, end: 185},
+        {id: 'sr9YKVLarws', start: 2619, end: 2828},
+        {id: 'Aqw6UI4lsfI', start: 04, end: 210}
+    ];
+</script>
+
+
+            <script src="https://www.youtube.com/iframe_api"></script>
+            <script src="../script.js"></script>
+        </body>
+        </html>
